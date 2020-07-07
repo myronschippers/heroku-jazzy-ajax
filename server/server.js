@@ -5,7 +5,8 @@ const bodyParser = require('body-parser');
 const app = express();
 const PORT = 5000;
 const Pool = pg.Pool;
-const pool = Pool({
+const pool = new Pool({
+  //"I want to create a new instance of 'pool' with these configurations."
   database: 'jazzy_ajax',
   host: 'localhost',
   port: 5432,
@@ -39,11 +40,26 @@ app.get('/artist', (req, res) => {
     .query(queryText)
     .then((dbResponse) => {
       console.log(dbResponse);
+      res.send(dbResponse.rows);
     })
     .catch((error) => {
       console.log(error);
     });
   res.send(artist);
+});
+
+app.get('/songs', (req, res) => {
+  const queryText = `SELECT * FROM "songs";`;
+  pool
+    .query(queryText)
+    .then((dbResponse) => {
+      console.log(dbResponse);
+      res.send(dbResponse.rows);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  res.send(songs);
 });
 
 app.listen(PORT, () => {
