@@ -13,18 +13,21 @@ const pool = new Pool({
   idleTimeoutMillis: 10000, // 10 seconds
 });
 
+//ROUTES
 router.post('/', (req, res) => {
-  console.log(`In /song POST with`, req.body);
+  console.log(`In /song GET`);
 
   const songToAdd = req.body;
   const queryText = `INSERT INTO "songs" ("song_title", "length", "date_released")
-                       VALUES ($1, $2, $3);`;
+VALUES ($1, $2, $3);`;
+
   pool
     .query(queryText, [
-      songToAdd.title,
+      songToAdd.sound_title,
       songToAdd.length,
       songToAdd.date_released,
     ])
+
     .then((responseFromDatabase) => {
       console.log(responseFromDatabase);
       // 201 means "created"
@@ -35,7 +38,6 @@ router.post('/', (req, res) => {
       res.sendStatus(500);
     });
 });
-
 router.get('/', (req, res) => {
   console.log(`In /song GET`);
 
@@ -52,19 +54,4 @@ router.get('/', (req, res) => {
       res.sendStatus(500);
     });
 });
-
-// //STATIC CONTENT
-// const songListArray = [
-//   {
-//     song_title: 'Take Five',
-//     length: '2:55',
-//     date_released: '1959-09-29',
-//   },
-//   {
-//     song_title: 'So What',
-//     length: '9:22',
-//     date_released: '1959-08-17',
-//   },
-// ];
-
 module.exports = router;

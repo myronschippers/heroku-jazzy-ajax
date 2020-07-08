@@ -12,16 +12,16 @@ const pool = new Pool({
   port: 5432,
   max: 10,
   idleTimeoutMillis: 3000,
-}); //all info needed to connect to database
+}); //All info needed to connect to database
 
 const artistRouter = require('./routes/artist.router.js');
 const songRouter = require('./routes/song.router.js');
 
-// Required for our POST requests to work
+//Required for our POST requests to work
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/artist', artistRouter);
-app.use('/songs', songRouter);
+app.use('/song', songRouter);
 
 app.use(express.static('server/public'));
 
@@ -33,34 +33,7 @@ pool.on('error', (error) => {
   console.log('Postgres Error');
 });
 
-//ROUTES
-app.get('/artist', (req, res) => {
-  const queryText = `SELECT * FROM "artists";`;
-  pool
-    .query(queryText)
-    .then((dbResponse) => {
-      console.log(dbResponse);
-      res.send(dbResponse.rows);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-  res.send(artist);
-});
-
-app.get('/songs', (req, res) => {
-  const queryText = `SELECT * FROM "songs";`;
-  pool
-    .query(queryText)
-    .then((dbResponse) => {
-      console.log(dbResponse);
-      res.send(dbResponse.rows);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-  res.send(songs);
-});
+//Routes are in router files
 
 app.listen(PORT, () => {
   console.log('listening on port', PORT);
