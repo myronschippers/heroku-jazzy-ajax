@@ -12,6 +12,9 @@ const pool = new Pool({
   port: 5432,
   max: 10,
   idleTimeoutMillis: 3000,
+  ssl: {
+    rejectUnauthorized: false
+  },
 }); //All info needed to connect to database
 
 const artistRouter = require('./routes/artist.router.js');
