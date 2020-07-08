@@ -3,7 +3,7 @@ const pg = require('pg');
 
 const bodyParser = require('body-parser');
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 const Pool = pg.Pool;
 const pool = new Pool({
   //"I want to create a new instance of 'pool' with these configurations."
