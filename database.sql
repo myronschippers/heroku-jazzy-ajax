@@ -5,8 +5,8 @@ CREATE TABLE "artists" (
 );
 
 CREATE TABLE "songs" (
-    "id" SERIAL PRIMARY KEY, 
+    "id" SERIAL PRIMARY KEY,
     "song_title" varchar(80) not null,
-    "length" varchar (80) not null, 
+    "length" varchar (80) not null,
     "date_released" date
 );

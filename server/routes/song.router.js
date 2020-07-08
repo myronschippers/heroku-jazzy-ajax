@@ -13,37 +13,6 @@ const pool = new Pool({
   idleTimeoutMillis: 10000, // 10 seconds
 });
 
-router.get('/', (req, res) => {
-  console.log(`In /song GET`);
-
-  let queryText = `SELECT * FROM "songs";`;
-  pool
-    .query(queryText)
-    .then((result) => {
-      // send back our query results as an array of objects
-      res.send(result.rows); // result.rows will always be an Array
-    })
-    .catch((error) => {
-      console.log(`Error in GET /songs ${error}`);
-      // 500 means "server error", generic but effective
-      res.sendStatus(500);
-    });
-});
-
-//STATIC CONTENT
-const songListArray = [
-  {
-    song_title: 'Take Five',
-    length: '2:55',
-    date_released: '1959-09-29',
-  },
-  {
-    song_title: 'So What',
-    length: '9:22',
-    date_released: '1959-08-17',
-  },
-];
-
 router.post('/', (req, res) => {
   console.log(`In /song POST with`, req.body);
 
@@ -66,5 +35,36 @@ router.post('/', (req, res) => {
       res.sendStatus(500);
     });
 });
+
+router.get('/', (req, res) => {
+  console.log(`In /song GET`);
+
+  let queryText = `SELECT * FROM "songs";`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      // send back our query results as an array of objects
+      res.send(result.rows); // result.rows will always be an Array
+    })
+    .catch((error) => {
+      console.log(`Error in GET /songs ${error}`);
+      // 500 means "server error", generic but effective
+      res.sendStatus(500);
+    });
+});
+
+// //STATIC CONTENT
+// const songListArray = [
+//   {
+//     song_title: 'Take Five',
+//     length: '2:55',
+//     date_released: '1959-09-29',
+//   },
+//   {
+//     song_title: 'So What',
+//     length: '9:22',
+//     date_released: '1959-08-17',
+//   },
+// ];
 
 module.exports = router;
